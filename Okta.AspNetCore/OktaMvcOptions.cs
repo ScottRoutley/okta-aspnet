@@ -59,5 +59,10 @@ namespace Okta.AspNetCore
         /// </summary>
         /// <value>The OnUserInformationReceived event.</value>
         public Func<UserInformationReceivedContext, Task> OnUserInformationReceived { get; set; } = context => Task.CompletedTask;
+
+        /// <summary>
+        /// Gets or sets the time for the Authentication Ticket Expiry.   Leave property null if not required.
+        /// </summary>
+        public int? AuthenticationTicketExpiryInMinutes { get; set; } = null;
     }
 }

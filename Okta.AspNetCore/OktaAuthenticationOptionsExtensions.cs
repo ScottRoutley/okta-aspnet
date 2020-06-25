@@ -61,6 +61,14 @@ namespace Okta.AspNetCore
                 OnRedirectToIdentityProvider = BeforeRedirectToIdentityProviderAsync,
             };
 
+            if (options.AuthenticationTicketExpiryInMinutes.HasValue)
+            {
+                events.OnTicketReceived = async (context) =>
+                {
+                    context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(options.AuthenticationTicketExpiryInMinutes.Value);
+                };
+            }
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             builder.AddOpenIdConnect(oidcOptions => OpenIdConnectOptionsHelper.ConfigureOpenIdConnectOptions(options, events, oidcOptions));
